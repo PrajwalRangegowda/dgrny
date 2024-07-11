@@ -4,9 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Carousel in iFrame</title>
+    <title>Responsive Image Carousel in iFrame</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100vh;
+            /* Adjusts the height to be the full viewport height */
+            border: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,7 +33,8 @@
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
       <style>
         body, html { height: 100%; margin: 0; }
-        .carousel-inner img { width: 100%; height: 100%; }
+        .carousel-inner img { width: 100%; height: auto; }
+        .carousel { height: 100%; }
       </style>
     </head>
     <body>
@@ -31,13 +46,13 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100" src="https://via.placeholder.com/800x400?text=First+Slide" alt="First slide">
+            <img class="d-block w-100" src="https://via.placeholder.com/1200x800?text=First+Slide" alt="First slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="https://via.placeholder.com/800x400?text=Second+Slide" alt="Second slide">
+            <img class="d-block w-100" src="https://via.placeholder.com/1200x800?text=Second+Slide" alt="Second slide">
           </div>
           <div class="carousel-item">
-            <img class="d-block w-100" src="https://via.placeholder.com/800x400?text=Third+Slide" alt="Third slide">
+            <img class="d-block w-100" src="https://via.placeholder.com/1200x800?text=Third+Slide" alt="Third slide">
           </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -54,7 +69,7 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
     </html>
-  ' width="800" height="400" style="border:none;"></iframe>
+  '></iframe>
 
 </body>
 
