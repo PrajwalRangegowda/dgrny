@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+</head>
+
+<body>
+    <h1>Submit Your Details</h1>
+    <form id="submissionForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="Email" required><br><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="Name" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById('submissionForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const name = document.getElementById('name').value;
+
+            const data = {
+                Email: email,
+                Name: name
+            };
+
+            fetch('https://emailrecord20240714154351.azurewebsites.net/api/EmailRecordService?code=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('Form submitted successfully!');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting the form.');
+                });
+        });
+    </script>
+</body>
+
+</html>
