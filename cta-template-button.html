@@ -20,6 +20,8 @@
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .transparent-button:hover {
@@ -53,13 +55,7 @@
 </head>
 
 <body>
-    <button class="transparent-button" onclick="redirectToLink()">Click Me!</button>
-
-    <script>
-        function redirectToLink() {
-            window.open("https://dgrny.super.site/template", "_blank");
-        }
-    </script>
+    <a href="https://dgrny.super.site/template" target="_blank" class="transparent-button">Click Me!</a>
 </body>
 
 </html>
