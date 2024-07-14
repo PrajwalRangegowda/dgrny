@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transparent Button Redirect</title>
+    <title>Dynamic Theme Button Redirect</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -12,50 +12,70 @@
         }
 
         .transparent-button {
-            background-color: black;
-            border: 2px solid black;
-            color: white;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             border-radius: 10px;
-            text-decoration: none;
-            display: inline-block;
+            border: 2px solid;
         }
 
-        .transparent-button:hover {
+        .theme-light .transparent-button {
+            background-color: black;
+            color: white;
+            border-color: black;
+        }
+
+        .theme-light .transparent-button:hover {
             background-color: rgba(255, 255, 255, 0.1);
             color: black;
         }
 
-        .transparent-button:active {
+        .theme-light .transparent-button:active {
             background-color: rgba(255, 255, 255, 0.2);
             color: black;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .transparent-button {
-                background-color: white;
-                border: 2px solid white;
-                color: black;
-            }
+        .theme-dark .transparent-button {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
 
-            .transparent-button:hover {
-                background-color: rgba(0, 0, 0, 0.1);
-                color: white;
-            }
+        .theme-dark .transparent-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: white;
+        }
 
-            .transparent-button:active {
-                background-color: rgba(0, 0, 0, 0.2);
-                color: white;
-            }
+        .theme-dark .transparent-button:active {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
         }
     </style>
 </head>
 
 <body>
-    <a href="https://dgrny.super.site/template" target="_blank" class="transparent-button">Click Me!</a>
+    <button class="transparent-button" onclick="redirectToLink()">Get the template!</button>
+
+    <script>
+        function redirectToLink() {
+            window.open("https://dgrny.super.site/template", "_blank");
+        }
+
+        function applyParentTheme() {
+            const parentBody = window.parent.document.body;
+            const iframeBody = document.body;
+            
+            if (parentBody.classList.contains('theme-light')) {
+                iframeBody.classList.add('theme-light');
+            } else if (parentBody.classList.contains('theme-dark')) {
+                iframeBody.classList.add('theme-dark');
+            }
+        }
+
+        // Apply the theme when the iframe content is loaded
+        window.onload = applyParentTheme;
+    </script>
 </body>
 
 </html>
