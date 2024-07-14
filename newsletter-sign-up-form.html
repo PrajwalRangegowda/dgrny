@@ -5,16 +5,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Submission</title>
+    <style>
+        body {
+            background-color: transparent;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="email"],
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+
+        input[type="submit"] {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #333;
+        }
+
+        .submit-success {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.5s;
+            animation: wavy 1s infinite;
+        }
+
+        @keyframes wavy {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Submit Your Details</h1>
     <form id="submissionForm">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="Email" required><br><br>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="Name" required><br><br>
+        <input type="text" id="name" name="Name" placeholder="Name" required>
+
+
+        <input type="email" id="email" name="Email" placeholder="example@email.com" required>
 
         <input type="submit" value="Submit">
     </form>
@@ -25,10 +101,7 @@
             const email = document.getElementById('email').value;
             const name = document.getElementById('name').value;
 
-            const data = {
-                Email: email,
-                Name: name
-            };
+            const data = { Email: email, Name: name };
 
             fetch('https://emailrecord20240714154351.azurewebsites.net/api/EmailRecordService?code=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6', {
                 method: 'POST',
@@ -41,17 +114,52 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
-                    return response.json();
+                    return response.text(); // Assuming the response is empty or plain text
                 })
-                .then(data => {
-                    console.log('Success:', data);
-                    alert('Form submitted successfully!');
+                .then(() => {
+                    const submitButton = document.querySelector('input[type="submit"]');
+                    submitButton.style.width = '100%'; // Correctly set the width
+                    submitButton.value = 'Thank you for subscribing!';
+                    submitButton.style.backgroundColor = getRandomColor();
+                    submitButton.style.color = getContrastingColor(submitButton.style.backgroundColor);
+                    submitButton.classList.add('submit-success');
+                    submitButton.disabled = true;
+
+
+                    // Reset the form fields
+                    document.getElementById('submissionForm').reset();
+
+                    // Reset the button text and color after a delay
+                    setTimeout(() => {
+                        submitButton.value = 'Submit';
+                        submitButton.style.width = '50%';
+                        submitButton.classList.remove('submit-success');
+                        submitButton.style.backgroundColor = '#000';
+                        submitButton.style.color = '#fff';
+                        submitButton.disabled = false;
+                    }, 3000); // Change back after 3 seconds
                 })
                 .catch((error) => {
                     console.error('Error:', error);
-                    alert('There was an error submitting the form.');
                 });
         });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function getContrastingColor(hexColor) {
+            const r = parseInt(hexColor.substr(1, 2), 16);
+            const g = parseInt(hexColor.substr(3, 2), 16);
+            const b = parseInt(hexColor.substr(5, 2), 16);
+            const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+            return yiq >= 128 ? '#000' : '#fff';
+        }
     </script>
 </body>
 
